@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="">
+    <head>
+        <title>Створити замовлення</title>
+        <link href="/static/css/create.css" rel="stylesheet">
+    </head>
+    <body>
+    <h1>Створити замовлення</h1>
+    <form method="POST" action="{{ url_for('order.create_order') }}">
+        <label for="order_number">Номер замовлення:</label>
+        <input type="number" name="order_number" id="order_number" required>
+        <label for="amount">Кількість:</label>
+        <input type="number" name="amount" id="amount" required>
+        <label for="product_id">Виберіть продукт:</label>
+        <select name="product_id" id="product_id" required>
+            {% for product in products %}
+                <option value="{{ product.id }}">{{ product.title }}</option>
+            {% endfor %}
+        </select><br>
+        <button type="submit" style="margin-top: 50px">Створити замовлення</button>
+    </form>
+    </body>
+    </html>
+{% endblock %}

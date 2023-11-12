@@ -1,0 +1,60 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Звіт про товари</title>
+        <link href="/static/css/list.css" rel="stylesheet">
+    </head>
+    <body>
+    <h1>Звіт про товари</h1>
+
+    <form action="{{ url_for('sell_product.sell_product') }}" method="GET">
+        <label for="start_date">З:</label>
+        <input type="date" id="start_date" name="start_date">
+
+        <label for="end_date">До:</label>
+        <input type="date" id="end_date" name="end_date">
+
+        <button type="submit">Показати</button>
+    </form>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div id="messages">
+                {% for message in messages %}
+                    <strong style="color: darkred" class="{{ message.category }}">{{ message }}</strong>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Номер продажу</th>
+            <th scope="col">Продано за</th>
+            <th scope="col">Кількість товару продано</th>
+            <th scope="col">Прибуток</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for expense_invoice in expense_invoices %}
+            <tr>
+                <td>{{ expense_invoice.id }}</td>
+                <td>{{ expense_invoice.expense_date }}</td>
+                <td>{{ expense_invoice.amount }}</td>
+                <td>{{ expense_invoice.order.product.price * expense_invoice.amount }} грн</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div style="margin-top: 50px">
+        <strong style="font-size: 32px">Усього: {{ total_profit }} грн</strong>
+    </div>
+    </body>
+    </html>
+{% endblock %}

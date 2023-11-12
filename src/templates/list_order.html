@@ -1,0 +1,76 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Замовлення</title>
+        <link href="/static/css/list.css" rel="stylesheet">
+    </head>
+    <body>
+    <h1>Замовлення</h1>
+
+    <a class="create-btn" href="{{ url_for('order.create_order') }}">Створити нове замовлення</a>
+    <form method="POST" action="{{ url_for('order.list_order') }}">
+        <label for="search_order_number">Пошук за номером замовлення:</label>
+        <input type="number" name="search_order_number" id="search_order_number" required>
+        <button type="submit">Пошук</button>
+    </form>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div id="messages">
+                {% for message in messages %}
+                    <strong style="color: darkred" class="{{ message.category }}">{{ message }}</strong>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Замовлення</th>
+            <th scope="col">Створено за</th>
+            <th scope="col">Номер замовлення</th>
+            <th scope="col">Кількість</th>
+            <th scope="col">Рахунок фактура</th>
+            <th scope="col" colspan="2">Опції</th>
+            <th scope="col" colspan="2">Списання</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.order_date }}</td>
+                <td>{{ order.order_number }}</td>
+                <td>{{ order.amount }}</td>
+                <td>
+                    <a href="{{ url_for('invoice.invoice', order_id=order.id) }}">Рахунок</a>
+                </td>
+                <td>
+                    <a href="{{ url_for('order.update_order', order_id=order.id) }}">Edit</a>
+                </td>
+                <td>
+                    <a class="delete" href="{{ url_for('order.delete_order', order_id=order.id) }}">Delete</a>
+                </td>
+                <td>
+                    <form method="POST" action="{{ url_for('order.sell_order', order_id=order.id) }}"
+                          style="display: flex; align-items: center;">
+                        <label for="quantity" style="margin-right: 10px;">Кількість:</label>
+                        <input type="number" name="quantity" id="quantity" style="margin-right: 10px;" required>
+                        <button type="submit"
+                                style="padding: 8px 12px; border: none; cursor: pointer;">Списати
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </body>
+    </html>
+{% endblock %}

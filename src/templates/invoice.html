@@ -1,0 +1,72 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Рахунок фактура</title>
+        <link href="/static/css/list.css" rel="stylesheet">
+    </head>
+    <body>
+    <h1>Рахунок фактура</h1>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div id="messages">
+                {% for message in messages %}
+                    <strong style="color: darkred" class="{{ message.category }}">{{ message }}</strong>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Фактура</th>
+            <th scope="col">Створено за</th>
+            <th scope="col">Кількість</th>
+            <th scope="col">Ціна продукта</th>
+            <th scope="col">Кількість продукта</th>
+            <th scope="col">Назва продукта</th>
+            <th scope="col">Фактура замовлення</th>
+            <th scope="col">Видаткова накладна</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ invoice.id }}</td>
+            <td>{{ invoice.invoice_date }}</td>
+            <td>{{ invoice.amount }}</td>
+            <td>{{ order.product.price }} грн</td>
+            <td>{{ order.product.amount }}</td>
+            <td>{{ order.product.title }}</td>
+            <td>{{ order.order_number }}</td>
+            {% if order.expense_invoice %}
+                <td>
+                    <a href="{{ url_for('expense_invoice.expense_invoice', order_id=order.id) }}">Видаткова накладка</a>
+                </td>
+            {% else %}
+                <td>Немає</td>
+            {% endif %}
+        </tr>
+        </tbody>
+    </table>
+    <div style="margin-top: 100px">
+        <strong style="font-size: 35px; color: darkred">Усього {{ invoice.amount * order.product.price }} грн</strong>
+    </div>
+    <div style="margin-top: 40px">
+        {% if invoice.amount > order.product.amount %}
+            <strong style="font-size: 24px">Не можна створити Видаткову накладну, оскільки недостатньо <strong
+                    style="color: darkred">{{ invoice.amount - order.product.amount }}</strong> одиниць товару</strong>
+        {% else %}
+            <form method="POST" action="{{ url_for('invoice.invoice', order_id=order.id) }}">
+                <button type="submit">Підтвердити замовлення та створити видаткову накладну</button>
+            </form>
+        {% endif %}
+    </div>
+    </body>
+    </html>
+{% endblock %}

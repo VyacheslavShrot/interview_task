@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="">
+    <head>
+        <title>Створити продукт</title>
+        <link href="/static/css/create.css" rel="stylesheet">
+    </head>
+    <body>
+    <h1>Створити продукт</h1>
+    <form method="POST" action="{{ url_for('product.product_create') }}">
+        <label for="title">Назва:</label>
+        <input type="text" name="title" id="title" required>
+        <label for="price">Ціна:</label>
+        <input type="number" name="price" id="price" required>
+        <label for="amount">Кількість:</label>
+        <input type="number" name="amount" id="amount" required>
+        <label for="end_date">Дата закінчення:</label>
+        <input type="date" name="end_date" id="end_date" required>
+        <button type="submit">Створити продукт</button>
+    </form>
+    </body>
+    </html>
+{% endblock %}

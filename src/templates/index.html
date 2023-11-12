@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+{% block content %}
+{% endblock %}
+
+<footer style="margin-top: 300px">
+    <a href="{{ url_for('order.list_order') }}" style="text-decoration: none; color: green; font-size: 25px; font-family: Impact sans-serif"><strong>Замовлення</strong></a><br>
+    <a href="{{ url_for('product.product_list') }}" style="text-decoration: none; color: green; font-size: 25px; font-family: Impact sans-serif"><strong>Продукти</strong></a><br>
+    <a href="{{ url_for('sell_product.sell_product') }}" style="text-decoration: none; color: green; font-size: 25px; font-family: Impact sans-serif"><strong>Звіт про товари</strong></a>
+</footer>
+
+</html>

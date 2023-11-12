@@ -1,0 +1,23 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="">
+    <head>
+        <title>Оновити замовлення</title>
+        <link href="/static/css/update.css" rel="stylesheet">
+    </head>
+    <body>
+    <h1>Оновити замовлення</h1>
+    <form method="POST">
+        <div class="form-group">
+            <label for="order_number">Номер замовлення</label>
+            <input type="number" class="form-control" id="order_number" name="order_number" value="{{ order.order_number }}">
+            <label for="amount">Кількість</label>
+            <input type="number" class="form-control" id="amount" name="amount" value="{{ order.amount }}">
+        </div>
+        <button type="submit">Оновити замовлення</button>
+    </form>
+    </body>
+    </html>
+{% endblock %}

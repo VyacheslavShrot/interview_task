@@ -1,0 +1,43 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Податкова накладна</title>
+        <link href="/static/css/list.css" rel="stylesheet">
+    </head>
+    <body>
+    <h1>Податкова накладна</h1>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div id="messages">
+                {% for message in messages %}
+                    <strong style="color: darkred" class="{{ message.category }}">{{ message }}</strong>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Накладна</th>
+            <th scope="col">Створено за</th>
+            <th scope="col">Комісія</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ tax_invoice.id }}</td>
+            <td>{{ tax_invoice.tax_date }}</td>
+            <td>{{ tax_invoice.amount }} грн</td>
+        </tr>
+        </tbody>
+    </table>
+    </body>
+    </html>
+{% endblock %}

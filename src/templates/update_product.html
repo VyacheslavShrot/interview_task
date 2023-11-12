@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="">
+    <head>
+        <title>Оновити продукт</title>
+        <link href="/static/css/update.css" rel="stylesheet">
+    </head>
+    <body>
+    <h1>Оновити продукт</h1>
+    <form method="POST">
+        <div class="form-group">
+            <label for="title">Назва</label>
+            <input type="text" class="form-control" id="title" name="title" value="{{ product.title }}">
+            <label for="price">Ціна</label>
+            <input type="number" class="form-control" id="price" name="price" value="{{ product.price }}">
+            <label for="amount">Кількість</label>
+            <input type="number" class="form-control" id="amount" name="amount" value="{{ product.amount }}">
+            <label for="end_date">Дата закінчення</label>
+            <input type="date" class="form-control" id="end_date" name="end_date" value="{{ product.end_date }}">
+        </div>
+        <button type="submit">Оновити продукт</button>
+    </form>
+    </body>
+    </html>
+{% endblock %}
